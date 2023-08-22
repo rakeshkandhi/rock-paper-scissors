@@ -1,10 +1,14 @@
-const express = require('express');
-const app = express();
+// Taking the input from the user
+const readline = require('readline');
+const { stdin: input, stdout: output } = require('node:process');
+const rl = readline.createInterface({ input, output });
+// Generates the computer choice for game
 function generateComputerChoice() {
     const choices = ['rock', 'paper', 'scissors'];
     const randomIndex = Math.floor(Math.random() * choices.length);
     return choices[randomIndex];
 }
+// Returns the winner
 function getWinner(userChoice, computerChoice) {
     if (userChoice === computerChoice) {
         return 'It\'s a tie!';
@@ -18,12 +22,6 @@ function getWinner(userChoice, computerChoice) {
         return 'Computer wins!';
     }
 }
-const readline = require('readline');
-const { generateComputerChoice, getWinner } = require('./game');
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 function startGame() {
     rl.question('Enter your name: ', (name) => {
         console.log(`Welcome, ${name}! Let's play Rock-Paper-Scissors.`);
@@ -52,9 +50,4 @@ function playRound(name) {
         }
     });
 }
-module.exports = { generateComputerChoice, getWinner };
-app.get('/', (req, res) => {
-    startGame();
-    res.send('Successful response.');
-});
-app.listen(3000);
+startGame();
